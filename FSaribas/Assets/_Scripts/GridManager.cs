@@ -67,10 +67,15 @@ public class GridManager : MonoBehaviour
                 //Cinemachine target group used for camera re-fitting
                 if (m_CinemachineTargetGroup)
                 {
-                    m_CinemachineTargetGroup.AddMember(obj.transform, 1, 1);
+                    m_CinemachineTargetGroup.AddMember(obj.transform, 1, 1.25f);
                 }
             }
         }
+    }
+    
+    public void GridItemClicked(GridItem item)
+    {
+        Debug.Log("Grid Item Clicked: " + item.name);
     }
     
     #endregion
@@ -84,6 +89,10 @@ public class GridManager : MonoBehaviour
             var item = m_ActiveGridItems[i];
             if (item)
             {
+                if (m_CinemachineTargetGroup)
+                {
+                    m_CinemachineTargetGroup.RemoveMember(item.transform);
+                }
                 Destroy(item.gameObject);   
             }
         }

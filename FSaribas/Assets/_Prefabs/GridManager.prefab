@@ -44,8 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5eb80d8e62d9d145bb50fb783c0f731, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PositionMode: 0
-  m_RotationMode: 0
+  m_PositionMode: 1
+  m_RotationMode: 1
   m_UpdateMethod: 2
   m_Targets: []
 --- !u!1 &9197913440194880761
