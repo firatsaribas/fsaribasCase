@@ -22,6 +22,8 @@ public class GridManager : MonoBehaviour
     private int m_TotalClearedCount;
     
     public Action<int> OnTotalClearedCountChanged;
+    
+    private const string m_TotalClearedCountKey = "TotalClearedCount";
 
     #endregion
 
@@ -48,7 +50,9 @@ public class GridManager : MonoBehaviour
         get => m_TotalClearedCount;
         set
         {
+            if(m_TotalClearedCount == value) return;
             m_TotalClearedCount = value;
+            PlayerPrefs.SetInt(m_TotalClearedCountKey,value);
             OnTotalClearedCountChanged?.Invoke(m_TotalClearedCount);
         }
     }
@@ -65,6 +69,7 @@ public class GridManager : MonoBehaviour
     private void Start()
     {
         CreateGrid(5);
+        TotalClearedCount = PlayerPrefs.GetInt(m_TotalClearedCountKey,0);
     }
 
     #endregion
@@ -111,23 +116,16 @@ public class GridManager : MonoBehaviour
 
             if (m_Neighbours.Count >= 3)
             {
-                StartCoroutine(LateCleanNeighbours());
+                foreach (var gridItem in m_Neighbours)
+                {
+                    gridItem.ResetItem();
+                    TotalClearedCount++;
+                }
             }
         }
     }
 
     #endregion
-
-    private IEnumerator LateCleanNeighbours()
-    {
-        yield return new WaitForSeconds(.5f);
-        foreach (var gridItem in m_Neighbours)
-        {
-            gridItem.ResetItem();
-            TotalClearedCount++;
-        }
-    }
-    
     private void CheckNeighbours(int row, int column)
     {
         (int rowStep, int columStep)[] directions = new (int, int)[]

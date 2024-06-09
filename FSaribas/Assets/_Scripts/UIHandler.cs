@@ -22,7 +22,6 @@ public class UIHandler : MonoBehaviour
         if (GridManager.Instance)
         {
             GridManager.Instance.OnTotalClearedCountChanged += OnTotalClearedCountChanged;
-            OnTotalClearedCountChanged(GridManager.Instance.TotalClearedCount);
         }
     }
 
