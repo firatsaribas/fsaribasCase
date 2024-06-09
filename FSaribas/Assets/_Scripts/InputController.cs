@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class InputController : MonoBehaviour
 {
-    [SerializeField] private LayerMask m_CubeMask;
+    [SerializeField] private LayerMask m_GridItemMask;
     private Camera m_MainCamera;
+    private const string m_GridItemTag = "GridItem";
 
     private void Awake()
     {
@@ -24,9 +25,13 @@ public class InputController : MonoBehaviour
     {
         var ray = m_MainCamera.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(ray, out var hit, m_MainCamera.farClipPlane, m_CubeMask))
+        if (Physics.Raycast(ray, out var hit, m_MainCamera.farClipPlane, m_GridItemMask))
         {
-           
+            var gridItem = hit.transform.GetComponent<GridItem>();
+            if (gridItem)
+            {
+                GridManager.Instance.GridItemClicked(gridItem);    
+            }
         }
     }
 }

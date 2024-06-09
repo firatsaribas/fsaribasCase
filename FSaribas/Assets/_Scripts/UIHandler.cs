@@ -11,6 +11,7 @@ public class UIHandler : MonoBehaviour
 
     [SerializeField] private Button m_Button;
     [SerializeField] private TMP_InputField m_InputField;
+    [SerializeField] private TextMeshProUGUI m_TotalClearedCountText;
     #endregion
 
     #region Unity Methods
@@ -18,11 +19,20 @@ public class UIHandler : MonoBehaviour
     private void Awake()
     {
         if(m_Button) m_Button.onClick.AddListener(OnButtonPressed);
+        if (GridManager.Instance)
+        {
+            GridManager.Instance.OnTotalClearedCountChanged += OnTotalClearedCountChanged;
+            OnTotalClearedCountChanged(GridManager.Instance.TotalClearedCount);
+        }
     }
 
     private void OnDestroy()
     {
         if(m_Button) m_Button.onClick.RemoveListener(OnButtonPressed);
+        if (GridManager.Instance)
+        {
+            GridManager.Instance.OnTotalClearedCountChanged += OnTotalClearedCountChanged;
+        }
     }
 
     #endregion
@@ -40,6 +50,11 @@ public class UIHandler : MonoBehaviour
             //This should also be prevented from unity tmp settings that accepts int only
             Debug.Log($"Conversion of {m_InputField.text} failed");
         }
+    }
+    
+    private void OnTotalClearedCountChanged(int count)
+    {
+        if(m_TotalClearedCountText) m_TotalClearedCountText.text = $"CLEARED: {count}";
     }
 
     #endregion
