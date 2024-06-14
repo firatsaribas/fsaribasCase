@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour
 
     private void CheckPlayerPos()
     {
-        if (m_PlayerController &&m_PlayerController.transform.position.z >= 35)
+        if (m_PlayerController && m_PlayerController.transform.position.z >= 35)
         {
             m_PlayerController.PlayerMovementState = PLayerMovementState.Dead;
         }
